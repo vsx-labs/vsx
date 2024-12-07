@@ -1,0 +1,142 @@
+syntax = "proto3";
+
+package com.stakewiz.api.v1;
+
+option go_package = "github.com/vsxdotdev/com/stakewiz/v1/api;proto";
+
+// The Validator service definition.
+service ValidatorService {
+    // List all validators.
+    rpc ListValidators(ListValidatorsRequest) returns (ListValidatorsResponse);
+}
+
+// The request message
+message ListValidatorsRequest {
+}
+
+// The response message
+message ListValidatorsResponse {
+    repeated Validator validator = 1;
+}
+
+// Validator is the information of a validator
+message Validator {
+    // Rank of the validator
+    uint32 rank = 1 [json_name = "rank"];
+    // Validator's identity/pubkey
+    string identity = 2 [json_name = "identity"];
+    // Validator's vote account pubkey
+    string vote_identity = 3 [json_name = "vote_identity"];
+    // Slot of the validator's last vote
+    uint64 last_vote = 4 [json_name = "last_vote"];
+    // Root slot of the validator
+    uint64 root_slot = 5 [json_name = "root_slot"];
+    // Total credits earned by the validator
+    uint64 credits = 6 [json_name = "credits"];
+    // Credits earned in the current epoch
+    uint64 epoch_credits = 7 [json_name = "epoch_credits"];
+    // Amount of activated stake
+    double activated_stake = 8 [json_name = "activated_stake"];
+    // Version of the validator's software
+    string version = 9 [json_name = "version"];
+    // Whether the validator is delinquent
+    bool delinquent = 10 [json_name = "delinquent"];
+    // Validator's skip rate
+    double skip_rate = 11 [json_name = "skip_rate"];
+    // Timestamp of the last update
+    string updated_at = 12 [json_name = "updated_at"];
+    // First epoch the validator had stake
+    uint32 first_epoch_with_stake = 13 [json_name = "first_epoch_with_stake"];
+    // Validator's name
+    string name = 14 [json_name = "name"];
+    // Validator's Keybase username
+    string keybase = 15 [json_name = "keybase"];
+    // Validator's description
+    string description = 16 [json_name = "description"];
+    // Validator's website
+    string website = 17 [json_name = "website"];
+    // Validator's commission rate
+    uint32 commission = 18 [json_name = "commission"];
+    // URL to the validator's image
+    string image = 19 [json_name = "image"];
+    // Latitude of the validator's IP address
+    string ip_latitude = 20 [json_name = "ip_latitude"];
+    // Longitude of the validator's IP address
+    string ip_longitude = 21 [json_name = "ip_longitude"];
+    // City of the validator's IP address
+    string ip_city = 22 [json_name = "ip_city"];
+    // Country of the validator's IP address
+    string ip_country = 23 [json_name = "ip_country"];
+    // ASN of the validator's IP address
+    string ip_asn = 24 [json_name = "ip_asn"];
+    // Organization of the validator's IP address
+    string ip_org = 25 [json_name = "ip_org"];
+    // Whether the validator is a moderator
+    bool mod = 26 [json_name = "mod"];
+    // Whether the validator is a Jito validator
+    bool is_jito = 27 [json_name = "is_jito"];
+    // Jito validator's commission in basis points
+    uint32 jito_commission_bps = 28 [json_name = "jito_commission_bps"];
+    // Validator's vote success rate
+    double vote_success = 29 [json_name = "vote_success"];
+    // Score based on vote success rate
+    double vote_success_score = 30 [json_name = "vote_success_score"];
+    // Score based on skip rate
+    double skip_rate_score = 31 [json_name = "skip_rate_score"];
+    // Score based on validator information
+    double info_score = 32 [json_name = "info_score"];
+    // Score based on commission rate
+    double commission_score = 33 [json_name = "commission_score"];
+    // Distance from the first epoch with stake
+    uint32 first_epoch_distance = 34 [json_name = "first_epoch_distance"];
+    // Score based on epoch distance
+    double epoch_distance_score = 35 [json_name = "epoch_distance_score"];
+    // Validator's stake weight
+    double stake_weight = 36 [json_name = "stake_weight"];
+    // Whether the validator is above the halt line
+    bool above_halt_line = 37 [json_name = "above_halt_line"];
+    // Score based on stake weight
+    double stake_weight_score = 38 [json_name = "stake_weight_score"];
+    // Score based on withdraw authority
+    double withdraw_authority_score = 39 [json_name = "withdraw_authority_score"];
+    // Autonomous System Number
+    string asn = 40 [json_name = "asn"];
+    // ASN concentration
+    double asn_concentration = 41 [json_name = "asn_concentration"];
+    // Score based on ASN concentration
+    double asn_concentration_score = 42 [json_name = "asn_concentration_score"];
+    // Validator's uptime
+    double uptime = 43 [json_name = "uptime"];
+    // Score based on uptime
+    double uptime_score = 44 [json_name = "uptime_score"];
+    // Overall Wiz score
+    double wiz_score = 45 [json_name = "wiz_score"];
+    // Whether the validator's version is valid
+    bool version_valid = 46 [json_name = "version_valid"];
+    // City concentration
+    double city_concentration = 47 [json_name = "city_concentration"];
+    // Score based on city concentration
+    double city_concentration_score = 48 [json_name = "city_concentration_score"];
+    // Score penalty for invalid version
+    double invalid_version_score = 49 [json_name = "invalid_version_score"];
+    // Superminority penalty
+    double superminority_penalty = 50 [json_name = "superminority_penalty"];
+    // Version of the scoring algorithm
+    uint32 score_version = 51 [json_name = "score_version"];
+    // No voting override flag
+    bool no_voting_override = 52 [json_name = "no_voting_override"];
+    // Current epoch
+    uint32 epoch = 53 [json_name = "epoch"];
+    // Epoch slot height
+    uint32 epoch_slot_height = 54 [json_name = "epoch_slot_height"];
+    // ASN and City concentration
+    double asncity_concentration = 55 [json_name = "asncity_concentration"];
+    // Score based on ASN and City concentration
+    double asncity_concentration_score = 56 [json_name = "asncity_concentration_score"];
+    // Stake ratio
+    double stake_ratio = 57 [json_name = "stake_ratio"];
+    // Credit ratio
+    double credit_ratio = 58 [json_name = "credit_ratio"];
+    // APY estimate
+    double apy_estimate = 59 [json_name = "apy_estimate"];
+}

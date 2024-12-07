@@ -1,0 +1,36 @@
+{
+	"name": "vsx-worker-api",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"start": "wrangler dev",
+		"generate": "buf generate",
+		"build": "wrangler deploy --dry-run --outdir=dist",
+		"vitest": "vitest",
+		"test": "concurrently --timings --success first --kill-others \"wrangler dev --local dist/index.js\" \"wait-on -d 1500 -t 10000 http-get://127.0.0.1:8787/healthz && vitest\"",
+		"testnode": "node --loader ts-node/esm --no-warnings --test src/validator-service.test.ts",
+		"example-shorten": "curl -X POST -H \"Content-Type: application/json\" -d '{\"url\": \"https://google.com\"}' http://localhost:8787/urlshortener.v1.UrlShortenerService/Shorten",
+		"example-validators": "curl -v -X POST -H \"Content-Type: application/json\" -d '{}' http://localhost:8787/com.stakewiz.api.v1.ValidatorService/ListValidators",
+		"ci": "npm run generate && npm run build && npm run test"
+	},
+	"dependencies": {
+		"@connectrpc/connect": "^2.0.0"
+	},
+	"devDependencies": {
+		"@bufbuild/buf": "^1.47.2",
+		"@bufbuild/protoc-gen-es": "^2.2.2",
+		"@cloudflare/workers-types": "^4.20241205.0",
+		"@cloudflare/vitest-pool-workers": "^0.5.34",
+		"@connectrpc/connect-node": "^2.0.0",
+		"@types/node": "^22.10.1",
+		"concurrently": "9.1.0",
+		"miniflare": "^3.20241106.1",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.7.2",
+		"wait-on": "^8.0.1",
+		"vitest": "^2.1.8",
+		"wrangler": "^3.91.0"
+	}
+}

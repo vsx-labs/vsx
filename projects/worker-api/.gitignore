@@ -1,0 +1,9 @@
+.wrangler/
+dist/
+
+# wrangler files
+.wrangler
+.dev.vars
+
+# node_modules
+node_modules/
