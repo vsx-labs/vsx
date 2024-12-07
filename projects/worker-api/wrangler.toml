@@ -3,6 +3,8 @@ main = "src/index.ts"
 compatibility_date = "2023-10-02"
 compatibility_flags = ["nodejs_compat"]
 
+route = "api.vsx.dev/*" # or "api.vsx.dev" if you want only the root path
+
 # [[kv_namespaces]]
 # binding = "STORE"
 # id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" # Replace with actual binding ID
