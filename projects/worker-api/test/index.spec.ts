@@ -3,6 +3,10 @@ import { env, createExecutionContext, waitOnExecutionContext, SELF } from 'cloud
 import { describe, it, expect } from 'vitest';
 import worker from '../src/index';
 
+// NOTE: https://api.vsx.dev baseUrl is not interpreted by the test as the
+// server is the worker itself, the test would still function if it was
+// example.com or any other domain.
+
 describe('Worker', () => {
     describe('GET /healthz', () => {
         it('responds OK from /healthz endpoint (unit style)', async () => {
@@ -20,7 +24,7 @@ describe('Worker', () => {
             expect(await response.text()).toMatchInlineSnapshot(`"OK"`);
         });
     });
-    describe.skip('GET /com.stakewiz.api.v1.ValidatorService/ListValidators', () => {
+    describe.skip('/com.stakewiz.api.v1.ValidatorService/ListValidators', () => {
         it('responds OK from /com.stakewiz.api.v1.ValidatorService/ListValidators endpoint (integration style)', async () => {
             const request = new Request('https://api.vsx.dev/com.stakewiz.api.v1.ValidatorService/ListValidators', {
                 method: 'POST',
