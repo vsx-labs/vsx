@@ -1,8 +1,8 @@
-name = "worker-api"
+name = "vsx-backend-api"
 main = "src/index.ts"
 compatibility_date = "2023-10-02"
 compatibility_flags = ["nodejs_compat"]
 
-[[kv_namespaces]]
-binding = "STORE"
-id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" # Replace with actual binding ID
+# [[kv_namespaces]]
+# binding = "STORE"
+# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" # Replace with actual binding ID
