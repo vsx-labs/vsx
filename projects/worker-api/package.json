@@ -22,11 +22,8 @@
 		"@cloudflare/vitest-pool-workers": "^0.5.34",
 		"@connectrpc/connect-node": "^2.0.0",
 		"@types/node": "^22.10.1",
-		"concurrently": "9.1.0",
-		"miniflare": "^3.20241106.1",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.7.2",
-		"wait-on": "^8.0.1",
 		"vitest": "^2.1.8",
 		"wrangler": "^3.91.0"
 	}
