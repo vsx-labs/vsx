@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package com.stakewiz.api.v1;
 
-option go_package = "github.com/vsxdotdev/com/stakewiz/v1/api;proto";
+option go_package = "github.com/vsxdotdev/com/stakewiz/api/v1;v1";
 
 // The Validator service definition.
 service ValidatorService {
