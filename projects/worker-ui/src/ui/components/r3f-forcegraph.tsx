@@ -1,12 +1,13 @@
 import { useCallback, useRef } from "react";
 import { Canvas, useFrame } from '@react-three/fiber';
 import { TrackballControls } from '@react-three/drei';
-import R3fForceGraph from 'r3f-forcegraph';
+import R3fForceGraph, { GraphMethods } from 'r3f-forcegraph';
 import * as gData from '../../../data/miserables.json';
 
 const GraphViz = () => {
-    const fgRef = useRef(null);
+    const fgRef = useRef<GraphMethods>();
     useFrame(() => {
+        if (!fgRef.current) return;
         return fgRef.current.tickFrame();
     });
 
