@@ -18,21 +18,17 @@ const data = {
   versions: ["MainNet", "TestNet", "DevNet"],
   navMain: [
     {
-      title: "Getting Started",
+      title: "General",
       url: "#",
       items: [
         {
           title: "Home",
           url: "/",
         },
-        {
-          title: "About",
-          url: "/about",
-        },
       ],
     },
     {
-      title: "Solana Blockchain",
+      title: "Solana",
       url: "#",
       items: [
         {
@@ -42,25 +38,25 @@ const data = {
         {
           title: "Validators",
           url: "/validators",
-          isActive: true,
+          isActive: false,
         },
       ],
     },
     {
       title: "API Reference",
-      url: "#",
+      url: "/api",
       items: [
         {
           title: "Geyser",
-          url: "#",
+          url: "/api",
         },
         {
           title: "JITO",
-          url: "#",
+          url: "/api",
         },
         {
           title: "Stackwiz",
-          url: "#",
+          url: "/api",
         },
       ],
     },

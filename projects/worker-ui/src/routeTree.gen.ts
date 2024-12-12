@@ -18,6 +18,7 @@ import { Route as rootRoute } from './routes/__root'
 
 const ValidatorsLazyImport = createFileRoute('/validators')()
 const EpochLazyImport = createFileRoute('/epoch')()
+const ApiLazyImport = createFileRoute('/api')()
 const AboutLazyImport = createFileRoute('/about')()
 const IndexLazyImport = createFileRoute('/')()
 
@@ -34,6 +35,12 @@ const EpochLazyRoute = EpochLazyImport.update({
   path: '/epoch',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/epoch.lazy').then((d) => d.Route))
+
+const ApiLazyRoute = ApiLazyImport.update({
+  id: '/api',
+  path: '/api',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/api.lazy').then((d) => d.Route))
 
 const AboutLazyRoute = AboutLazyImport.update({
   id: '/about',
@@ -65,6 +72,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutLazyImport
       parentRoute: typeof rootRoute
     }
+    '/api': {
+      id: '/api'
+      path: '/api'
+      fullPath: '/api'
+      preLoaderRoute: typeof ApiLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/epoch': {
       id: '/epoch'
       path: '/epoch'
@@ -87,6 +101,7 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
+  '/api': typeof ApiLazyRoute
   '/epoch': typeof EpochLazyRoute
   '/validators': typeof ValidatorsLazyRoute
 }
@@ -94,6 +109,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
+  '/api': typeof ApiLazyRoute
   '/epoch': typeof EpochLazyRoute
   '/validators': typeof ValidatorsLazyRoute
 }
@@ -102,22 +118,24 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
+  '/api': typeof ApiLazyRoute
   '/epoch': typeof EpochLazyRoute
   '/validators': typeof ValidatorsLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/epoch' | '/validators'
+  fullPaths: '/' | '/about' | '/api' | '/epoch' | '/validators'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/epoch' | '/validators'
-  id: '__root__' | '/' | '/about' | '/epoch' | '/validators'
+  to: '/' | '/about' | '/api' | '/epoch' | '/validators'
+  id: '__root__' | '/' | '/about' | '/api' | '/epoch' | '/validators'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   AboutLazyRoute: typeof AboutLazyRoute
+  ApiLazyRoute: typeof ApiLazyRoute
   EpochLazyRoute: typeof EpochLazyRoute
   ValidatorsLazyRoute: typeof ValidatorsLazyRoute
 }
@@ -125,6 +143,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   AboutLazyRoute: AboutLazyRoute,
+  ApiLazyRoute: ApiLazyRoute,
   EpochLazyRoute: EpochLazyRoute,
   ValidatorsLazyRoute: ValidatorsLazyRoute,
 }
@@ -141,6 +160,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
+        "/api",
         "/epoch",
         "/validators"
       ]
@@ -150,6 +170,9 @@ export const routeTree = rootRoute
     },
     "/about": {
       "filePath": "about.lazy.tsx"
+    },
+    "/api": {
+      "filePath": "api.lazy.tsx"
     },
     "/epoch": {
       "filePath": "epoch.lazy.tsx"

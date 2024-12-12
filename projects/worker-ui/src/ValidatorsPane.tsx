@@ -1,16 +1,16 @@
-import { Loading } from './Loading';
 import { Validator } from './gen/com/stakewiz/api/v1/validators_pb';
 import { listValidators } from './gen/com/stakewiz/api/v1/validators-ValidatorService_connectquery';
 import { useQuery } from '@connectrpc/connect-query';
 import { Avatar, AvatarImage } from './components/ui/avatar';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from './components/ui/table';
+import { Spinner } from './ui/components/spinner';
 
 export const ValidatorsPane = () => {
     const { isLoading, isError, error, data } = useQuery(listValidators);
 
     if (isLoading) {
         return (
-            <Loading />
+            <Spinner />
         );
     }
 

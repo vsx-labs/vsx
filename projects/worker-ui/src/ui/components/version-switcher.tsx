@@ -26,7 +26,7 @@ export function VersionSwitcher({
               </div>
               <div className="flex flex-col gap-0.5 leading-none">
                 <span className="font-semibold text-sm">VSX Labs</span>
-                <span className="font-extralight text-purple-700">{selectedVersion}</span>
+                <span className="font-extralight text-blue-700">{selectedVersion}</span>
               </div>
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
