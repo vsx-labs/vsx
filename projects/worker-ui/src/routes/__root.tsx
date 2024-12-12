@@ -66,7 +66,7 @@ export function App() {
                                 </BreadcrumbItem>
                                 <BreadcrumbSeparator className="hidden md:block" />
                                 <BreadcrumbItem>
-                                    <BreadcrumbPage>panel</BreadcrumbPage>
+                                    <BreadcrumbPage>vsx.dev</BreadcrumbPage>
                                 </BreadcrumbItem>
                             </BreadcrumbList>
                         </Breadcrumb>

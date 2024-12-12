@@ -149,3 +149,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.width-500 {
+  max-width: 500px;
+}
