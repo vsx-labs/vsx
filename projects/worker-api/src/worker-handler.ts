@@ -1,9 +1,9 @@
-import { createConnectRouter } from '@connectrpc/connect';
+import { createConnectRouter, cors as connectCors } from '@connectrpc/connect';
 import { universalServerRequestFromFetch, universalServerResponseToFetch } from '@connectrpc/connect/protocol';
 import type { ConnectRouter, ConnectRouterOptions, ContextValues } from '@connectrpc/connect';
 import type { UniversalHandler } from '@connectrpc/connect/protocol';
 
-interface WokerHandlerOptions<Env> extends ConnectRouterOptions {
+interface WorkerHandlerOptions<Env> extends ConnectRouterOptions {
 	/**
 	 * Route definitions. We recommend the following pattern:
 	 *
@@ -31,10 +31,11 @@ interface WokerHandlerOptions<Env> extends ConnectRouterOptions {
 	notFound?: (req: Request, env: Env, ctx: ExecutionContext) => Promise<Response>;
 }
 
+
 /**
  * Creates new worker handler for the given Connect API routes.
  */
-export function createWorkerHandler<Env>(options: WokerHandlerOptions<Env>) {
+export function createWorkerHandler<Env>(options: WorkerHandlerOptions<Env>) {
 	const router = createConnectRouter();
 	options.routes(router);
 	const paths = new Map<string, UniversalHandler>();
@@ -47,13 +48,58 @@ export function createWorkerHandler<Env>(options: WokerHandlerOptions<Env>) {
 			if (url.pathname === '/healthz') {
 				return new Response('OK', { status: 200 });
 			}
+			const corsHeaders = {
+				'Access-Control-Allow-Origin': '*',  // Highly discouraged for production
+				'Access-Control-Allow-Methods': 'POST,GET,OPTIONS',//connectCors.allowedMethods.join(','),
+				'Access-Control-Allow-Headers': connectCors.exposedHeaders.join(','),
+				"Access-Control-Max-Age": "86400",
+			};
+
+			async function handleOptions(request: Request) {
+				if (
+					request.headers.get("Origin") !== null &&
+					request.headers.get("Access-Control-Request-Method") !== null &&
+					request.headers.get("Access-Control-Request-Headers") !== null
+				) {
+					// Handle CORS preflight requests.
+					return new Response(null, {
+						headers: {
+							...corsHeaders,
+							"Access-Control-Allow-Headers": request.headers.get(
+								"Access-Control-Request-Headers",
+							) || '',
+						},
+					});
+				} else {
+					// Handle standard OPTIONS request.
+					return new Response(null, {
+						headers: {
+							Allow: "GET,POST,OPTIONS",
+						},
+					});
+				}
+			}
+
+			if (req.method === 'OPTIONS') {
+				return handleOptions(req);
+			}
+
 			const handler = paths.get(url.pathname);
 			if (handler === undefined) {
 				return (await options?.notFound?.(req, env, ctx)) ?? new Response('Not found', { status: 404 });
 			}
 			const uReq = { ...universalServerRequestFromFetch(req, {}), contextValues: options?.contextValues?.(req, env, ctx) };
 			const uRes = await handler(uReq);
-			return universalServerResponseToFetch(uRes);
+			const response = universalServerResponseToFetch(uRes);
+
+			return new Response(response.body, {
+				status: response.status,
+				statusText: response.statusText,
+				headers: {
+					...corsHeaders,
+					...Object.fromEntries(response.headers),
+				}
+			});
 		},
 	};
 }

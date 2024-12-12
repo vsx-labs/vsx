@@ -1,6 +1,7 @@
 // test/index.spec.ts
 import { env, createExecutionContext, waitOnExecutionContext, SELF } from 'cloudflare:test';
 import { describe, it, expect } from 'vitest';
+import { JsonValue } from "@bufbuild/protobuf";
 import worker from '../src/index';
 
 // NOTE: https://api.vsx.dev baseUrl is not interpreted by the test as the
@@ -8,7 +9,7 @@ import worker from '../src/index';
 // example.com or any other domain.
 
 describe('Worker', () => {
-    describe('GET /healthz', () => {
+    describe.only('GET /healthz', () => {
         it('responds OK from /healthz endpoint (unit style)', async () => {
             const request = new Request('https://api.vsx.dev/healthz');
             // Create an empty context to pass to `worker.fetch()`.
@@ -24,21 +25,46 @@ describe('Worker', () => {
             expect(await response.text()).toMatchInlineSnapshot(`"OK"`);
         });
     });
-    describe.skip('/com.stakewiz.api.v1.ValidatorService/ListValidators', () => {
-        it('responds OK from /com.stakewiz.api.v1.ValidatorService/ListValidators endpoint (integration style)', async () => {
-            const request = new Request('https://api.vsx.dev/com.stakewiz.api.v1.ValidatorService/ListValidators', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({}),
+
+    describe.only('grpc-web endpoints', () => {
+        type GrpcWebTestCase = {
+            endpoint: string;
+            request: JsonValue;
+        };
+        const testCases: GrpcWebTestCase[] = [
+            {
+                endpoint: '/com.stakewiz.api.v1.ValidatorService/ListValidators',
+                request: {},
+            },
+            {
+                endpoint: '/com.stakewiz.api.v1.EpochService/GetCurrentEpoch',
+                request: {},
+            },
+            {
+                endpoint: '/com.stakewiz.api.v1.EpochService/GetHistoricalEpoch',
+                request: { epoch: 340 },
+            },
+            {
+                endpoint: '/com.stakewiz.api.v1.EpochService/ListHistoricalEpochs',
+                request: {},
+            },
+        ];
+        testCases.forEach(tc => {
+            it(`responds OK from ${tc.endpoint} endpoint (integration style)`, async () => {
+                const request = new Request(`https://api.vsx.dev${tc.endpoint}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(tc.request),
+                });
+
+                const ctx = createExecutionContext();
+                const response = await worker.fetch(request, env, ctx);
+                await waitOnExecutionContext(ctx);
+
+                expect(response.status).toBe(200);
             });
-
-            const ctx = createExecutionContext();
-            const response = await worker.fetch(request, env, ctx);
-            await waitOnExecutionContext(ctx);
-
-            expect(response.status).toBe(200);
         });
     });
 });

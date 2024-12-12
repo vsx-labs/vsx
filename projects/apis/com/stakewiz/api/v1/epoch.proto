@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package com.stakewiz.api.v1;
+
+option go_package = "github.com/vsxdotdev/com/stakewiz/api/v1;v1";
+
+// The Epoch service definition.
+service EpochService {
+    // Get the current epoch.
+    rpc GetCurrentEpoch(GetCurrentEpochRequest) returns (Epoch);
+    // Get the current epoch.
+    rpc GetHistoricalEpoch(GetHistoricalEpochRequest) returns (HistoricalEpoch);
+    // List all Epochs.
+    rpc ListHistoricalEpochs(ListHistoricalEpochsRequest) returns (ListHistoricalEpochsResponse);
+}
+
+// The request message for CurrentEpoch
+message GetCurrentEpochRequest {
+}
+
+// The request message for CurrentEpoch
+message GetHistoricalEpochRequest {
+    // Epoch number.
+    int32 epoch = 1 [json_name = "epoch"];
+}
+
+// The request message for ListHistoricalEpochs
+message ListHistoricalEpochsRequest {
+}
+
+// The response message for ListHistoricalEpochs
+message ListHistoricalEpochsResponse {
+    repeated HistoricalEpoch epoch = 1;
+}
+
+
+// HistoricalEpoch is the information of a previous Epoch
+message HistoricalEpoch {
+    // Epoch number.
+    int32 epoch = 1 [json_name = "epoch"];
+    // Start time of the epoch.
+    string start = 2 [json_name = "start"];
+    // End time of the epoch.
+    string end = 3 [json_name = "end"];
+    // Duration of the epoch in seconds.
+    int64 duration_seconds = 4 [json_name = "duration_seconds"];
+}
+
+message Epoch {
+    // Current epoch number.
+    int32 epoch = 1 [json_name = "epoch"];
+    // Starting slot of the current epoch.
+    int64 start_slot = 2 [json_name = "start_slot"];
+    // Start time of the current epoch.
+    string start_time = 3 [json_name = "start_time"];
+    // Current slot height within the epoch.
+    int64 slot_height = 4 [json_name = "slot_height"];
+    // Total duration of the epoch in seconds.
+    int64 duration_seconds = 5 [json_name = "duration_seconds"];
+    // Elapsed seconds since the start of the epoch.
+    int64 elapsed_seconds = 6 [json_name = "elapsed_seconds"];
+    // Remaining seconds in the epoch.
+    int64 remaining_seconds = 7 [json_name = "remaining_seconds"];
+    // Estimated epochs per year.
+    double epochs_per_year = 8 [json_name = "epochs_per_year"];
+}
