@@ -1,8 +1,9 @@
-import { Box } from '@primer/react';
 import { Loading } from './Loading';
 import { Validator } from './gen/com/stakewiz/api/v1/validators_pb';
 import { listValidators } from './gen/com/stakewiz/api/v1/validators-ValidatorService_connectquery';
 import { useQuery } from '@connectrpc/connect-query';
+import { Avatar, AvatarImage } from './components/ui/avatar';
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from './components/ui/table';
 
 export const ValidatorsPane = () => {
     const { isLoading, isError, error, data } = useQuery(listValidators);
@@ -15,22 +16,39 @@ export const ValidatorsPane = () => {
 
     if (isError) {
         return (
-            <Box>
-                <code>{error.code}: {error.message}</code>
-            </Box>
+            <code>{error.code}: {error.message}</code>
         );
 
     }
     return (
-        <Box
-            sx={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: 3,
-            }}
-        >
-            {data!.validator.map(v => <ValidatorListItem key={v.identity} validator={v}></ValidatorListItem>)}
-        </Box>
+        <Table>
+            <TableCaption>List of validators</TableCaption>
+            <TableHeader>
+                <TableRow>
+                    <TableHead className="">#</TableHead>
+                    <TableHead className=""></TableHead>
+                    <TableHead>Name</TableHead>
+                    <TableHead>IP Country</TableHead>
+                    <TableHead className="text-right">Activated Stake</TableHead>
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                {data?.validator.map((validator, index) => (
+                    <TableRow key={validator.identity}>
+                        <TableCell className='text-muted-foreground'>{index}</TableCell>
+                        <TableCell className="font-medium">
+                            <Avatar>
+                                <AvatarImage src={validator.image} alt={validator.name} />
+                            </Avatar>
+                        </TableCell>
+                        <TableCell>{validator.name || validator.identity}</TableCell>
+                        <TableCell>{validator.ipCountry}</TableCell>
+                        <TableCell>{validator.stakeRatio}</TableCell>
+                        <TableCell className="text-right">{validator.activatedStake}</TableCell>
+                    </TableRow>
+                ))}
+            </TableBody>
+        </Table>
     );
 
 };
@@ -41,16 +59,8 @@ interface ValidatorListItemProps {
 
 export const ValidatorListItem = ({ validator }: ValidatorListItemProps) => {
     return (
-        <Box
-            sx={{
-                p: 3,
-                borderWidth: 1,
-                borderStyle: 'solid',
-                borderColor: 'border.default',
-            }}
-        >
+        <div>
             {validator.name}
-        </Box>
+        </div>
     );
-
 };
