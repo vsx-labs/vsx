@@ -17,7 +17,7 @@ export const WelcomeHeader = () => {
                     </Stack.Item>
                     <Stack.Item>
                         <Text sx={{ color: 'fg.default', fontSize: '3', fontWeight: 'light' }}>
-                            validator stake analytix
+                            solana validator stake analytics
                         </Text>
                     </Stack.Item>
                 </Stack>

@@ -1,0 +1,29 @@
+.main-container {
+  max-width: 1028px;
+  margin: auto;
+}
+
+/** remove link underline on the main navigation items */
+.main-nav-item {
+  text-decoration: none;
+  font-weight: 700;
+  font-size: larger;
+}
+
+.main-breadcrumb-item {
+  font-size: 22px;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.side-nav-item {
+  text-decoration: none;
+}
+
+.full-width {
+  width: 24rem;
+}
+
+.text-muted {
+  font-weight: var(--base-text-weight-light, 300);
+}
