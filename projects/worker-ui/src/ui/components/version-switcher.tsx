@@ -21,8 +21,8 @@ export function VersionSwitcher({
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                <CpuIcon className="size-8" />
+              <div className="flex aspect-square size-8 items-center justify-center rounded-lg">
+                <img src="/vsx-labs.svg" alt="Logo" className="size-8" />
               </div>
               <div className="flex flex-col gap-0.5 leading-none">
                 <span className="font-semibold text-sm">VSX Labs</span>
