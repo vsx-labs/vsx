@@ -12,9 +12,7 @@ function Index() {
                 VSX Labs
             </h1>
             <p className="leading-7 [&:not(:first-child)]:mt-6 pb-6 width-500" >
-
-                VSX Labs aims to provide best-in-class Solana cluster analytics and monitoring to empower
-                your transaction decision making.
+                VSX Labs aims to provide best-in-class Solana cluster data and analytics to empower your transaction decision making.
             </p>
             <Scene />
         </div>

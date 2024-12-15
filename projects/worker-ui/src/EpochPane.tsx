@@ -29,7 +29,7 @@ export const EpochPane = () => {
 
     return (
         <div className='text-sm'>
-            <div className='p-2 text-lg'>Epoch #{epoch.epoch}</div>
+            <h2 className='p-2 font-semibold text-xl'>Epoch #{epoch.epoch}</h2>
             <div className="p-2">
                 <ProgressWithValue value={progress}></ProgressWithValue>
             </div>
