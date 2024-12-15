@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Check, ChevronsUpDown, CpuIcon } from "lucide-react"
+import { Check, ChevronsUpDown } from "lucide-react"
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../../components/ui/sidebar"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@radix-ui/react-dropdown-menu"
 
