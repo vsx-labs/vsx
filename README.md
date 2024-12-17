@@ -1,7 +1,7 @@
-# Monorepo for the Vsx Project
+# Monorepo for VSX Labs
 
-## GitHub
+## Links
 
-- Org: https://github.com/vsxdotdev
-- Repos: 
-  - https://github.com/vsxdotdev/vsx
+- https://vsx.dev
+- https://github.com/vsx-labs
+- https://github.com/vsx-labs/vsx
