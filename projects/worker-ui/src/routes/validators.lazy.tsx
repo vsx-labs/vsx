@@ -1,11 +1,11 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import { ValidatorsPane } from '../ValidatorsPane'
+import { DataTableDemo } from '../ValidatorsDataTable'
 
 export const Route = createLazyFileRoute('/validators')({
     component: Validators,
 })
 
 function Validators() {
-    return <ValidatorsPane />
-
+    // return <ValidatorsPane />
+    return <DataTableDemo />
 }
