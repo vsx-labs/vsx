@@ -2,7 +2,7 @@ import { Code, ConnectError, HandlerContext, type ConnectRouter } from '@connect
 import { EpochService } from './gen/com/stakewiz/api/v1/epoch_pb';
 import { ValidatorService } from './gen/com/stakewiz/api/v1/validators_pb';
 import { kStore } from './store-context';
-import { fetchEpochHistory, fetchEpochInfo, fetchHistoricalEpochInfo, fetchValidators } from './stakewiz';
+import { fetchEpochHistory, fetchEpochInfo, fetchHistoricalEpochInfo, fetchValidator, fetchValidators } from './stakewiz';
 
 function getStore(ctx: HandlerContext): KVNamespace {
 	const store = ctx.values.get(kStore);
@@ -31,5 +31,10 @@ export default (router: ConnectRouter) => {
 			const validator = await fetchValidators();
 			return { validator };
 		},
+		getValidator: async ({ voteIdentity }, _ctx) => {
+			const validator = await fetchValidator(voteIdentity);
+			return validator;
+		},
+
 	});
 };

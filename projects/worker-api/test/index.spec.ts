@@ -9,7 +9,7 @@ import worker from '../src/index';
 // example.com or any other domain.
 
 describe('Worker', () => {
-    describe.only('GET /healthz', () => {
+    describe('GET /healthz', () => {
         it('responds OK from /healthz endpoint (unit style)', async () => {
             const request = new Request('https://api.vsx.dev/healthz');
             // Create an empty context to pass to `worker.fetch()`.
@@ -26,7 +26,7 @@ describe('Worker', () => {
         });
     });
 
-    describe.only('grpc-web endpoints', () => {
+    describe('grpc-web endpoints', () => {
         type GrpcWebTestCase = {
             endpoint: string;
             request: JsonValue;
@@ -35,6 +35,10 @@ describe('Worker', () => {
             {
                 endpoint: '/com.stakewiz.api.v1.ValidatorService/ListValidators',
                 request: {},
+            },
+            {
+                endpoint: '/com.stakewiz.api.v1.ValidatorService/GetValidator',
+                request: { voteIdentity: 'vsxurakbU9y5XddhpnvbgPoZzA46osJmfXj2AXCn94c' },
             },
             {
                 endpoint: '/com.stakewiz.api.v1.EpochService/GetCurrentEpoch',
