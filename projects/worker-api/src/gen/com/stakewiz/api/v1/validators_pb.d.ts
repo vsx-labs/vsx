@@ -43,6 +43,24 @@ export declare type ListValidatorsResponse = Message<"com.stakewiz.api.v1.ListVa
 export declare const ListValidatorsResponseSchema: GenMessage<ListValidatorsResponse>;
 
 /**
+ * The request message
+ *
+ * @generated from message com.stakewiz.api.v1.GetValidatorRequest
+ */
+export declare type GetValidatorRequest = Message<"com.stakewiz.api.v1.GetValidatorRequest"> & {
+  /**
+   * @generated from field: string vote_identity = 1;
+   */
+  voteIdentity: string;
+};
+
+/**
+ * Describes the message com.stakewiz.api.v1.GetValidatorRequest.
+ * Use `create(GetValidatorRequestSchema)` to create a new message.
+ */
+export declare const GetValidatorRequestSchema: GenMessage<GetValidatorRequest>;
+
+/**
  * Validator is the information of a validator
  *
  * @generated from message com.stakewiz.api.v1.Validator
@@ -483,6 +501,16 @@ export declare const ValidatorService: GenService<{
     methodKind: "unary";
     input: typeof ListValidatorsRequestSchema;
     output: typeof ListValidatorsResponseSchema;
+  },
+  /**
+   * Get a single validator.
+   *
+   * @generated from rpc com.stakewiz.api.v1.ValidatorService.GetValidator
+   */
+  getValidator: {
+    methodKind: "unary";
+    input: typeof GetValidatorRequestSchema;
+    output: typeof ValidatorSchema;
   },
 }>;
 

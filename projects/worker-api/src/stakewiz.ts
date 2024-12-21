@@ -38,6 +38,33 @@ export async function fetchValidators(): Promise<Validator[]> {
     }
 }
 
+
+export async function fetchValidator(voteIdentity: string): Promise<Validator> {
+    try {
+        const response = await fetch(`https://api.stakewiz.com/validator/${voteIdentity}`);
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => null); // Try to get JSON error, otherwise null
+            const errorMessage = errorData || response.statusText;
+            throw new ConnectError(JSON.stringify(errorMessage), Code.Internal, {
+                status: String(response.status),
+            }, undefined);
+        }
+
+        const result: JsonValue = await response.json();
+        try {
+            const validator = fromJson(ValidatorSchema, result, {
+                ignoreUnknownFields: true,
+            });
+            return validator;
+        } catch (e) {
+            throw new ConnectError('Invalid Epoch Payload', Code.InvalidArgument, undefined, undefined, e);
+        }
+    } catch (e) {
+        throw new ConnectError('Invalid URL', Code.InvalidArgument, undefined, undefined, e);
+    }
+}
+
 export async function fetchEpochInfo(): Promise<Epoch> {
     try {
         const response = await fetch('https://api.stakewiz.com/epoch_info');
